@@ -2,8 +2,8 @@ package khaiii_test
 
 import (
 	"fmt"
+	"go-khaiii/khaiii"
 	"testing"
-	"tokenizer-khaiii/khaiii"
 )
 
 func TestCreate(t *testing.T) {
