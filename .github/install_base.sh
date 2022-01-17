@@ -1,5 +1,5 @@
 #/bin/bash
-
+echo "::set-env name=GOPATH::$(go env GOPATH)"
 # Install Dependency
 echo "Install Dependencies..."
 OS=$(uname)
