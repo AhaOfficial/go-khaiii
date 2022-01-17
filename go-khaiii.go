@@ -1,8 +1,7 @@
 package go_khaiii
 
 /*
-#cgo CFLAGS -I${SRCDIR}/
-#cgo LDFLAGS: -L${SRCDIR}/ -Wl,-rpath=\$ORIGIN/ -lkhaiiic
+#cgo LDFLAGS: -L./ -lkhaiiic
 #include <khaiiic.h>
 */
 import "C"
