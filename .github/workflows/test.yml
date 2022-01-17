@@ -17,6 +17,12 @@ jobs:
 
       - name: Install Khaiii
         run: ls -al ..
+        
+      - name: Install Khaiii
+        run: pwd
+        
+      - name: Install Khaiii
+        run: ls -al ../..
 
       # - name: Cache Dependencies
       #   uses: actions/cache@v2
