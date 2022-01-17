@@ -21,14 +21,12 @@ cp -pfr ../include/khaiii ${KHAIII_LIBC_DIR}
 cd ${KHAIII_LIBC_DIR}
 qmake khaiii-libc.pro
 make
-cp -pf khaiiic.h ${BASE}/khaiii
-cp -pf libkhaiiic.* ${BASE}/khaiii
-cp -pf libkhaiiic.* ${BASE}
+cp -pf khaiiic.h ${BASE}/..
+cp -pf libkhaiiic.* ${BASE}/..
 
 # Run with go-khaiii
-cd ${BASE}
+cd ${BASE}/..
 go mod init go-khaiii
 go mod tidy
 
-# You can run this
-echo "Run [ go run main.go ]"
+echo "Complete!"

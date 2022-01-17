@@ -1,0 +1,73 @@
+name: test
+
+on:
+  pull_request: {}
+  push:
+    branches:
+      - main
+
+jobs:
+  linux:
+    strategy:
+      matrix:
+        go:
+          - "1"
+          - "1.17"
+          - "1.16"
+          - "1.15"
+          - "1.14"
+          - "1.13"
+          - "1.12"
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/khaiii
+          key: ${{ runner.os }}-${{ hashFiles('.github/install.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - name: install dependencies
+        run: |
+          sudo apt-get install git cmake qmake
+      - name: install khaiii
+        run: |
+          .github/install.sh
+      - name: test
+        run: |
+          go version
+          go test -v -race ./...
+  macos:
+    strategy:
+      matrix:
+        go:
+          - "1"
+          - "1.17"
+          - "1.16"
+          - "1.15"
+          - "1.14"
+          - "1.13"
+          - "1.12"
+      fail-fast: false
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/khaiii
+          key: ${{ runner.os }}-${{ hashFiles('.github/install.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - name: install dependencies
+        run: |
+          brew install git cmake qmake
+      - name: install khaiii
+        run: |
+          .github/install.sh
+      - name: test
+        run: |
+          go version
+          go test -v -race ./...

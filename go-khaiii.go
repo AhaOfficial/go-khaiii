@@ -1,4 +1,4 @@
-package khaiii
+package go_khaiii
 
 /*
 #cgo LDFLAGS: -L./ -lkhaiiic
