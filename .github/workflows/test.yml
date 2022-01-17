@@ -8,27 +8,23 @@ on:
 
 jobs:
   macos:
-    strategy:
-      matrix:
-        go:
-          - "1.17"
-      fail-fast: false
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
+
       - uses: actions/cache@v2
+        id: cache
         with:
-          path: |
-            ${{ github.workspace }}/khaiii
-          key: ${{ runner.os }}-${{ hashFiles('.github/install.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-
+          path: ${{ github.workspace }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/install_base.sh') }}
+
       - name: install dependencies
-        run: |
-          brew install git cmake qt
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: .github/install_base.sh
+
       - name: install khaiii
-        run: |
-          .github/install.sh
+        run: .github/install.sh
+
       - name: test
         run: |
           go version

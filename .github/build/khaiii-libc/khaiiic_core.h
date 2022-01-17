@@ -3,6 +3,7 @@
 
 #include "khaiii_api.h"
 #include "khaiii_dev.h"
+#include <cstring>
 
 #ifdef __cplusplus
 extern "C" {
