@@ -8,13 +8,15 @@ on:
 
 jobs:
   macos:
+    env:
+      GOPATH: ${{ github.workspace }}
+
     runs-on: macos-latest
+
     steps:
-      - uses: actions/checkout@v2
-
-      - name: gopath
-        run: echo "::set-env name=GOPATH::$(go env GOPATH)"
-
+      - name: Checkout code
+        uses: actions/checkout@v2
+    
       - name: Cache Dependencies
         uses: actions/cache@v2
         env:
@@ -27,6 +29,9 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
+      - name: Install through brew
+        run: .github/install_brew.sh
+
       - name: Install Dependencies
         run: .github/install_base.sh
 
@@ -34,4 +39,6 @@ jobs:
         run: .github/install.sh
 
       - name: Test
-        run: go test
+        run: go test -race ./...
+        env:
+          GOPATH: ${{ github.workspace }}
