@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: gopath
+        run: echo "::set-env name=GOPATH::$(go env GOPATH)"
+
       - name: Cache Dependencies
         uses: actions/cache@v2
         env:
