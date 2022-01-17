@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-
       - name: install dependencies
         run: |
-          sudo apt-get install git cmake qmake
+          sudo apt-get install git cmake qt5-default
       - name: install khaiii
         run: |
           .github/install.sh
@@ -63,7 +63,7 @@ jobs:
             ${{ runner.os }}-
       - name: install dependencies
         run: |
-          brew install git cmake qmake
+          brew install git cmake qt
       - name: install khaiii
         run: |
           .github/install.sh
