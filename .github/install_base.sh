@@ -1,18 +1,4 @@
-#/bin/bash
-echo "::set-env name=GOPATH::$(go env GOPATH)"
-# Install Dependency
-echo "Install Dependencies..."
-OS=$(uname)
-if [[ ${OS} == "Darwin" ]]; then
-    brew install git cmake qt > /dev/null 2>&1
-elif [[ ${OS} == "Linux" ]]; then
-    if [ -e "/etc/lsb-release" ]; then #Ubuntu
-        sudo apt-get install git cmake qt5-default > /dev/null 2>&1
-    else
-        sudo yum install git cmake qt > /dev/null 2>&1
-    fi
-fi
-echo "[Complete] Install Dependencies."
+#!/bin/bash
 
 # Set base path
 cd `dirname ${BASH_SOURCE}`
