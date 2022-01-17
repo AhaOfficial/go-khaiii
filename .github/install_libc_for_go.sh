@@ -16,8 +16,6 @@ cp -pf khaiiic.h ${BASE}
 cp -pf libkhaiiic.* ${BASE}
 cp -pf khaiiic.h ${BASE}/..
 cp -pf libkhaiiic.* ${BASE}/..
-cp -pf khaiiic.h ${BASE}/../..
-cp -pf libkhaiiic.* ${BASE}/../..
 
 echo "ls -al ${BASE}"
 ls -al ${BASE}
@@ -25,9 +23,4 @@ ls -al ${BASE}
 echo "ls -al ${BASE}/.."
 ls -al ${BASE}/..
 
-# Run with go-khaiii
-cd ${BASE}/..
-go mod init go-khaiii
-go mod tidy
-
-echo "Complete!"
+echo "Build Complete!"

@@ -8,9 +8,6 @@ on:
 
 jobs:
   macos:
-    env:
-      GOPATH: ${{ github.workspace }}
-
     runs-on: macos-latest
 
     steps:
@@ -29,16 +26,20 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install through brew
-        run: .github/install_brew.sh
-
       - name: Install Dependencies
+        run: .github/install_dependencies.sh
+
+      - name: Install Original Khaiii
         run: .github/install_base.sh
 
       - name: Install Khaiii
-        run: .github/install.sh
+        run: .github/install_libc_for_go.sh
 
       - name: Test
-        run: go test -race ./...
+        run: |
+          go mod init go-khaiii
+          go mod tidy
+          go test -race ./...
         env:
-          GOPATH: ${{ github.workspace }}
+          CGO_LDFLAGS: -L${{ github.workspace }} -lkhaiiic
+          CGO_CFLAGS: -I${{ github.workspace }}
