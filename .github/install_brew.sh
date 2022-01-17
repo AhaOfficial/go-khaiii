@@ -15,5 +15,4 @@ elif [[ ${OS} == "Linux" ]]; then
         sudo yum install git cmake qt go > /dev/null 2>&1
     fi
 fi
-echo "::set-env name=GOPATH::$(go env GOPATH)"
 echo "[Complete] Install Dependencies."
