@@ -12,6 +12,10 @@ elif [[ ${OS} == "Linux" ]]; then
     fi
 fi
 
+echo "[OS] ${OS}"
+echo "[BASE] ${BASE}"
+echo "[KHAIII_LIBC_DIR] ${KHAIII_LIBC_DIR}"
+
 # Set base path
 cd `dirname ${BASH_SOURCE}`
 BASE=$(pwd)
