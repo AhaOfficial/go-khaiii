@@ -2,8 +2,8 @@
 
 # Set base path
 cd `dirname ${BASH_SOURCE}`
-BASE=$(pwd)
-KHAIII_LIBC_DIR=$(pwd)/build/khaiii-libc
+BASE=$(pwd) # .github
+KHAIII_LIBC_DIR=${BASE}/build/khaiii-libc
 
 echo "[BASE] ${BASE}"
 echo "[KHAIII_LIBC_DIR] ${KHAIII_LIBC_DIR}"

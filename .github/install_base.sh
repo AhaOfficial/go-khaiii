@@ -12,14 +12,14 @@ elif [[ ${OS} == "Linux" ]]; then
     fi
 fi
 
-echo "[OS] ${OS}"
-echo "[BASE] ${BASE}"
-echo "[KHAIII_LIBC_DIR] ${KHAIII_LIBC_DIR}"
-
 # Set base path
 cd `dirname ${BASH_SOURCE}`
 BASE=$(pwd)
 KHAIII_LIBC_DIR=$(pwd)/build/khaiii-libc
+
+echo "[OS] ${OS}"
+echo "[BASE] ${BASE}"
+echo "[KHAIII_LIBC_DIR] ${KHAIII_LIBC_DIR}"
 
 # Download Original Khaiii
 cd build

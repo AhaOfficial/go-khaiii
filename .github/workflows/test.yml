@@ -20,12 +20,7 @@ jobs:
 
       - name: install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: echo $(pwd) #.github/install_base.sh
+        run: .github/install_base.sh
 
       - name: install khaiii
-        run: ls -al $(pwd) #.github/install.sh
-
-      - name: test
-        run: |
-          go version
-          go test -v -race ./...
+        run: .github/install.sh
