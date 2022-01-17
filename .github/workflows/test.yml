@@ -12,15 +12,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/cache@v2
-        id: cache
+      - name: Cache Dependencies
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-dependencies
         with:
-          path: ${{ github.workspace }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/install_base.sh') }}
+          path: .github
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.github/install_base.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
-      - name: install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+      - name: Install Dependencies
         run: .github/install_base.sh
 
-      - name: install khaiii
+      - name: Install Khaiii
         run: .github/install.sh

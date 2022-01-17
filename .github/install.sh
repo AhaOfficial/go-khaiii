@@ -16,6 +16,8 @@ cp -pf khaiiic.h ${BASE}
 cp -pf libkhaiiic.* ${BASE}
 cp -pf khaiiic.h ${BASE}/..
 cp -pf libkhaiiic.* ${BASE}/..
+cp -pf khaiiic.h ${BASE}/../..
+cp -pf libkhaiiic.* ${BASE}/../..
 
 # Run with go-khaiii
 cd ${BASE}/..
