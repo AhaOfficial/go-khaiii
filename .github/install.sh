@@ -21,8 +21,8 @@ cp -pfr ../include/khaiii ${KHAIII_LIBC_DIR}
 cd ${KHAIII_LIBC_DIR}
 qmake khaiii-libc.pro
 make
-cp -pf khaiiic.h ${BASE}/..
-cp -pf libkhaiiic.* ${BASE}/..
+cp -pf khaiiic.h ${BASE}
+cp -pf libkhaiiic.* ${BASE}
 
 # Run with go-khaiii
 cd ${BASE}/..
