@@ -20,10 +20,10 @@ jobs:
 
       - name: install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: echo "ls -al $(pwd)" #.github/install_base.sh
+        run: echo $(pwd) #.github/install_base.sh
 
       - name: install khaiii
-        run: echo "ls -al $(pwd)/.github" #.github/install.sh
+        run: ls -al $(pwd) #.github/install.sh
 
       - name: test
         run: |
