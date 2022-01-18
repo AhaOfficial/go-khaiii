@@ -42,5 +42,6 @@ jobs:
         run: |
           export CGO_LDFLAGS="-L${{ github.workspace }} -lkhaiiic"
           export CGO_CFLAGS="-I${{ github.workspace }}"
+          go mod init github.com/AhaOfficial/go-khaiii
           go mod tidy
           go test -race ./...
