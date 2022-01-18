@@ -83,8 +83,10 @@ int destroy(int* tagger)
 {
     khaiii::KhaiiiApi* khaiii_api = (khaiii::KhaiiiApi*)tagger;
     try {
-        khaiii_api->close();
-        khaiii_api = nullptr;
+        if ( khaiii_api != nullptr ) {
+            khaiii_api->close();
+            khaiii_api = nullptr;
+        }
         return 1;
     } catch (const khaiii::Except& exc) {
         return 0;

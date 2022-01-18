@@ -6,12 +6,23 @@ go-khaiii is Khaiii binding for Golang.
 
 ## Sample code
 
+- 모델 생성:
+    - khaiii.Model.Create(rsc_dir string, opt_str string)
+- 형태소 분석:
+    - khaiii.Model.Parse(line string)
+        - (입력 예시) 나는 회사에 간다
+        - (출력 예시)
+        [ ["나", "NP"], ["는", "JX"],
+           ["회사", "NNG"], ["에", "JKB"], 
+           ["가", "VV"], ["ㄴ다", "EC"] ]
+- 모델 소멸:
+    - khaiii.Model.Destroy()
+
 ```go
 package main
 
 import (
 	"fmt"
-	"os"
 
 	khaiii "github.com/AhaOfficial/go-khaiii"
 )
@@ -19,19 +30,18 @@ import (
 func main() {
 	var model khaiii.Model
 
-	error := model.Create("", "")
-	if error != nil {
+	err := model.Create("", "")
+	if err != nil {
 		fmt.Println("Create Error!")
-		os.Exit(1)
+		panic(err)
 	}
 	defer model.Destroy()
 
-	// input: 나는 학교에 간다
-	// output: [["나", "NP"], ["는", "JX"], ["회사", "NNG"], ["에", "JKB"], ["가", "VV"], ["ㄴ다", "EC"]]
 	var sentence string = "나는 회사에 간다"
-	parsedSentence, error := model.Parse(sentence)
-	if error != nil {
+	parsedSentence, err := model.Parse(sentence)
+	if err != nil {
 		fmt.Println("Parsing Error!")
+		panic(err)
 	}
 	fmt.Println(sentence)
 	fmt.Println(parsedSentence)
@@ -49,14 +59,10 @@ $ cd go-khaiii
 $ .github/install_base.sh
 $ .github/install_libc_for_go.sh
 
-# move libkhaiiic.* to /path/to/lib
-$ mv libkhaiiic.* /path/to/lib
-
-# move khaiiic.h to /path/to/include
-$ mv khaiiic.h /path/to/include
+# move libraries to /usr/local/lib
+$ mv libkhaiii*.* /usr/local/lib
 
 # Export Variables
-$ export CGO_LDFLAGS="-L/path/to/lib -lkhaiiic"
-$ export CGO_CFLAGS="-I/path/to/include"
+$ export CGO_LDFLAGS="-L/usr/local/lib -lkhaiiic"
 $ go get github.com/AhaOfficial/go-khaiii
 ```
