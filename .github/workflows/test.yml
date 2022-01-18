@@ -14,13 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
     
-      - name: Set env
-        run: |
-          export "CGO_LDFLAGS=-L${{ github.workspace }} -lkhaiiic"
-          export "CGO_CFLAGS=-I${{ github.workspace }}"
-          echo $CGO_LDFLAGS
-          echo $CGO_CFLAGS
-
       - name: Cache Dependencies
         uses: actions/cache@v2
         env:
@@ -36,6 +29,9 @@ jobs:
       - name: Install Dependencies
         run: .github/install_dependencies.sh
 
+      - name: Show go env
+        run: go env
+
       - name: Install Original Khaiii
         run: .github/install_base.sh
 
@@ -44,9 +40,8 @@ jobs:
 
       - name: Test
         run: |
+          export CGO_LDFLAGS="-L${{ github.workspace }} -lkhaiiic"
+          export CGO_CFLAGS="-I${{ github.workspace }}"
           go mod init go-khaiii
           go mod tidy
           go test -race ./...
-        env:
-          CGO_LDFLAGS: -L${{ github.workspace }} -lkhaiiic
-          CGO_CFLAGS: -I${{ github.workspace }}
