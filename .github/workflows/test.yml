@@ -42,6 +42,7 @@ jobs:
         run: |
           ls -al
           cp -pf ./libkhaiii*.* /usr/local/lib
+          cp -pf khaiiic.h /usr/local/include
           export CGO_LDFLAGS="-L/usr/local/lib -lkhaiiic"
           go mod init github.com/AhaOfficial/go-khaiii
           go mod tidy

@@ -7,40 +7,49 @@ import (
 
 func TestCreate(t *testing.T) {
 	var model Model
-	error := model.Create("", "")
-	if error != nil {
+	err := model.Create("", "")
+	if err != nil {
 		t.Error("Wrong Create")
+		panic(err)
 	} else {
-		defer model.Destroy()
+		err = model.Destroy()
+		if err != nil {
+			t.Error("Destroy Error!")
+			panic(err)
+		}
 	}
 }
 
 func TestParse(t *testing.T) {
 	var model Model
-	error := model.Create("", "")
-	if error != nil {
+	err := model.Create("", "")
+	if err != nil {
 		t.Error("Create Error!")
-		return
+		panic(err)
 	}
-	result, error := model.Parse("나는 회사에 간다")
-	if error != nil {
+	result, err := model.Parse("나는 회사에 간다")
+	if err != nil {
 		t.Error("Parse Error!")
-		return
+		panic(err)
 	} else {
 		fmt.Println(result)
-		defer model.Destroy()
+		err = model.Destroy()
+		if err != nil {
+			t.Error("Destroy Error!")
+			panic(err)
+		}
 	}
 }
 
 func TestDestroy(t *testing.T) {
 	var model Model
-	error := model.Create("", "")
-	if error != nil {
+	err := model.Create("", "")
+	if err != nil {
 		t.Error("Create Error!")
 		return
 	}
-	error = model.Destroy()
-	if error != nil {
+	err = model.Destroy()
+	if err != nil {
 		t.Error("Destroy Error!")
 		return
 	}
