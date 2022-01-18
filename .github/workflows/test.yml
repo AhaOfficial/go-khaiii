@@ -16,8 +16,8 @@ jobs:
     
       - name: Set env
         run: |
-          echo "CGO_LDFLAGS=-L${{ github.workspace }} -lkhaiiic" >> $GITHUB_ENV
-          echo "CGO_CFLAGS=-I${{ github.workspace }}" >> $GITHUB_ENV
+          export "CGO_LDFLAGS=-L${{ github.workspace }} -lkhaiiic"
+          export "CGO_CFLAGS=-I${{ github.workspace }}"
           echo $CGO_LDFLAGS
           echo $CGO_CFLAGS
 
@@ -47,3 +47,6 @@ jobs:
           go mod init go-khaiii
           go mod tidy
           go test -race ./...
+        env:
+          CGO_LDFLAGS: -L${{ github.workspace }} -lkhaiiic
+          CGO_CFLAGS: -I${{ github.workspace }}
