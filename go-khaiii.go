@@ -1,7 +1,6 @@
 package go_khaiii
 
 /*
-#cgo LDFLAGS: -L./ -lkhaiiic
 #include <khaiiic.h>
 */
 import "C"
