@@ -36,6 +36,7 @@ ls -al lib
 
 echo "cp -pfr lib ${KHAIII_LIBC_DIR}"
 cp -pfr lib ${KHAIII_LIBC_DIR}
+cp -pf lib/libkhaiii.* ${BASE}/..
 
 echo "ls -al ../include/khaiii"
 ls -al ../include/khaiii
