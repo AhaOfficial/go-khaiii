@@ -14,18 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
     
-      - name: Cache Dependencies
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-dependencies
-        with:
-          path: .github
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.github/install_base.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
       - name: Install Dependencies
         run: .github/install_dependencies.sh
 
