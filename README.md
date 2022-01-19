@@ -53,16 +53,13 @@ func main() {
 ```bash
 $ brew install git cmake qt go # for MacOS
 
-# Install for building C Library
+# Install for go-khaiii libraries
 $ git clone https://github.com/AhaOfficial/go-khaiii.git
 $ cd go-khaiii
-$ .github/install_base.sh
-$ .github/install_libc_for_go.sh
+$ make
+$ sudo make install
 
-# move libraries to /usr/local/lib
-$ mv libkhaiii*.* /usr/local/lib
-
-# Export Variables
+# Export variables
 $ export CGO_LDFLAGS="-L/usr/local/lib -lkhaiiic"
 $ go get github.com/AhaOfficial/go-khaiii
 ```
