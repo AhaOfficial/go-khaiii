@@ -7,6 +7,9 @@ int* create(const char* rsc_dir, const char* opt_str)
 {
     try {
         global_tagger = khaiii::KhaiiiApi::create();
+        if ( global_tagger == nullptr ) {
+            return nullptr;
+        }
         global_tagger->open(rsc_dir, opt_str);
         return (int*)global_tagger.get();
     } catch (const khaiii::Except& exc) {
@@ -18,6 +21,11 @@ const khaiii_word_t* generate_analyze(int* tagger, const char* line)
 {
     const khaiii_word_t* results = nullptr;
     khaiii::KhaiiiApi* khaiii_api = (khaiii::KhaiiiApi*)tagger;
+
+    if ( khaiii_api == nullptr ) {
+        return nullptr;
+    }
+
     try {
         results = khaiii_api->analyze(line, "");
         return results;
@@ -34,6 +42,10 @@ char* analyze_morphs(int* tagger, const khaiii_word_t* words)
     std::string strResult;
     const std::string sep = "/";
     const std::string token = " + ";
+
+    if ( khaiii_api == nullptr ) {
+        return nullptr;
+    }
 
     for (auto word = words; word != nullptr; word = word->next) {
         const khaiii_morph_t* morphs = word->morphs;
