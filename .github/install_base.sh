@@ -28,15 +28,24 @@ ls -al
 # Build and Install Original Khaiii
 echo "Build and Install Original Khaiii..."
 mkdir build && cd build
+echo "cmake .."
 cmake .. > /dev/null 2>&1
+echo "make all"
 make all  > /dev/null 2>&1
+echo "make resource"
+make resource > /dev/null 2>&1
 
 echo "ls -al lib"
 ls -al lib
 
 echo "cp -pfr lib ${KHAIII_LIBC_DIR}"
 cp -pfr lib ${KHAIII_LIBC_DIR}
+
+echo "cp -pf lib/libkhaiii.* ${BASE}/.."
 cp -pf lib/libkhaiii.* ${BASE}/..
+
+echo "cp -pfr share ${BASE}/.."
+cp -pfr share ${BASE}/..
 
 echo "ls -al ../include/khaiii"
 ls -al ../include/khaiii

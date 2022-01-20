@@ -19,4 +19,4 @@ INCLUDEPATH += \
     khaiii
 
 LIBS += \
-    -L"$$PWD/lib" -lkhaiii
+    -L"$$PWD/lib" -lkhaiii -lpthread

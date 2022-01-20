@@ -6,8 +6,10 @@ KHAIII_LIB_PATH = .github/build/khaiii-libc
 LIB_KHAIII = libkhaiii
 LIB_KHAIII_C = libkhaiiic
 LIB_KHAIII_C_HEADER = khaiiic.h
+KHAIII_DIC_DIR = share/khaiii
 USR_LIB_PATH = /usr/local/lib
 USR_INCLUDE_PATH = /usr/local/include
+USR_SHARE_PATH = /usr/local/share
 
 all:
 	@$(SH) $(INSTALL_KHAIII)
@@ -17,11 +19,13 @@ install:
 	@cp -pf $(LIB_KHAIII).* $(USR_LIB_PATH)
 	@cp -pf $(LIB_KHAIII_C).* $(USR_LIB_PATH)
 	@cp -pf $(LIB_KHAIII_C_HEADER) $(USR_INCLUDE_PATH)
+	@cp -pfr $(KHAIII_DIC_DIR) $(USR_SHARE_PATH)
 
 clean:
 	@rm -f $(LIB_KHAIII).*
 	@rm -f $(LIB_KHAIII_C).*
 	@rm -f $(LIB_KHAIII_C_HEADER)
+	@rm -rf share
 	@rm -rf $(KHAIII_PATH)
 	@rm -f $(KHAIII_LIB_PATH)/$(LIB_KHAIII_C).*
 	@rm -f $(KHAIII_LIB_PATH)/*.o
@@ -35,3 +39,5 @@ uninstall:
 	@rm -f $(USR_LIB_PATH)/$(LIB_KHAIII).*
 	@rm -f $(USR_LIB_PATH)/$(LIB_KHAIII_C).*
 	@rm -f $(USR_INCLUDE_PATH)/$(LIB_KHAIII_C_HEADER)
+	@rm -rf $(USR_SHARE_PATH)/khaiii
+
