@@ -50,8 +50,10 @@ func main() {
 
 # Install
 
+### MacOS
+
 ```bash
-$ brew install git cmake qt go # for MacOS
+$ brew install git cmake qt go
 
 # Install for go-khaiii libraries
 $ git clone https://github.com/AhaOfficial/go-khaiii.git
@@ -60,6 +62,23 @@ $ make
 $ sudo make install
 
 # Export variables
+$ export CGO_LDFLAGS="-L/usr/local/lib -lkhaiiic"
+$ go get github.com/AhaOfficial/go-khaiii
+```
+
+### Ubuntu 20.04
+
+```bash
+$ sudo apt-get install -y git cmake qt5-default golang-go language-pack-ko
+
+# Install for go-khaiii libraries
+$ git clone https://github.com/AhaOfficial/go-khaiii.git
+$ cd go-khaiii
+$ make
+$ sudo make install
+
+# Export variables
+$ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
 $ export CGO_LDFLAGS="-L/usr/local/lib -lkhaiiic"
 $ go get github.com/AhaOfficial/go-khaiii
 ```
