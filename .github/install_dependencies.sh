@@ -4,15 +4,16 @@
 echo "Install Dependencies..."
 OS=$(uname)
 if [[ ${OS} == "Darwin" ]]; then
-    brew update > /dev/null 2>&1
-    brew install git cmake qt go > /dev/null 2>&1
+    brew update
+    brew install git cmake qt go
 elif [[ ${OS} == "Linux" ]]; then
     if [ -e "/etc/lsb-release" ]; then #Ubuntu
-        sudo apt-get update > /dev/null 2>&1
-        sudo apt-get install git cmake qt5-default go > /dev/null 2>&1
+        sudo apt-get update
+        sudo apt-get -y install build-essential
+        sudo apt-get -y install git libssl-dev cmake qt5-default python3 language-pack-ko go
     else
-        sudo yum update > /dev/null 2>&1
-        sudo yum install git cmake qt go > /dev/null 2>&1
+        sudo yum update
+        sudo yum install git cmake qt go
     fi
 fi
 echo "[Complete] Install Dependencies."

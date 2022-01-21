@@ -1,4 +1,5 @@
 #!/bin/bash
+set -v
 
 # Set base path
 cd `dirname ${BASH_SOURCE}`
@@ -14,41 +15,37 @@ echo "=============================="
 ls -al
 
 # Download Original Khaiii
-echo "cd build"
 cd build
 ls -al
 
-echo "git clone https://github.com/kakao/khaiii.git"
 git clone https://github.com/kakao/khaiii.git
 
-echo "cd khaiii"
 cd khaiii
 ls -al
 
 # Build and Install Original Khaiii
 echo "Build and Install Original Khaiii..."
 mkdir build && cd build
-echo "cmake .."
-cmake .. > /dev/null 2>&1
-echo "make all"
-make all  > /dev/null 2>&1
-echo "make resource"
-make resource > /dev/null 2>&1
 
-echo "ls -al lib"
+if [ -e /etc/os-release ]; then
+    if [ $(cat /etc/os-release | grep UBUNTU_CODENAME | awk -F'=' '{print $2}') = "focal" ]; then
+        cmake -E env CXXFLAGS="-w" cmake ..     # Ubuntu 20.04
+    else
+        cmake ..
+    fi
+else
+    cmake ..
+fi
+
+make all
+make resource
+
 ls -al lib
 
-echo "cp -pfr lib ${KHAIII_LIBC_DIR}"
 cp -pfr lib ${KHAIII_LIBC_DIR}
-
-echo "cp -pf lib/libkhaiii.* ${BASE}/.."
 cp -pf lib/libkhaiii.* ${BASE}/..
-
-echo "cp -pfr share ${BASE}/.."
 cp -pfr share ${BASE}/..
 
-echo "ls -al ../include/khaiii"
 ls -al ../include/khaiii
 
-echo "cp -pfr ../include/khaiii ${KHAIII_LIBC_DIR}"
 cp -pfr ../include/khaiii ${KHAIII_LIBC_DIR}

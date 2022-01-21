@@ -5,8 +5,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        khaiiic_core.cpp \
-        khaiiic.cc
+    khaiiic_core.cpp \
+    khaiiic.cc
 
 HEADERS += \
     khaiii/KhaiiiApi.hpp \
