@@ -11,7 +11,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v2
     
       - name: Install Dependencies
@@ -20,18 +20,15 @@ jobs:
       - name: Show go env
         run: go env
 
-      - name: Install Original Khaiii
-        run: .github/install_base.sh
+      - name: Build Original Khaiii and Make C Libraries
+        run: make
 
-      - name: Install Khaiii
-        run: .github/install_libc_for_go.sh
+      - name: Install Libraries, Header files, and Resources
+        run: make install
 
       - name: Test
         run: |
-          ls -al
-          cp -pf libkhaiii*.* /usr/local/lib
-          cp -pf khaiiic.h /usr/local/include
           export CGO_LDFLAGS="-L/usr/local/lib -lkhaiiic"
           go mod init github.com/AhaOfficial/go-khaiii
           go mod tidy
-          go test -race ./...
+          go test
