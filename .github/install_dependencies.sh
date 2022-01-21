@@ -1,4 +1,5 @@
 #!/bin/bash
+set -v
 
 # Install Dependency
 echo "Install Dependencies..."
@@ -10,10 +11,10 @@ elif [[ ${OS} == "Linux" ]]; then
     if [ -e "/etc/lsb-release" ]; then #Ubuntu
         sudo apt-get update
         sudo apt-get -y install build-essential
-        sudo apt-get -y install git libssl-dev cmake qt5-default python3 language-pack-ko go
+        sudo apt-get -y install git libssl-dev cmake qt5-default python3 language-pack-ko golang-go
     else
         sudo yum update
-        sudo yum install git cmake qt go
+        sudo yum install git cmake qt golang
     fi
 fi
 echo "[Complete] Install Dependencies."
