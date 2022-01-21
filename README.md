@@ -2,12 +2,14 @@
 
 ## What is go-khaiii?
 
-go-khaiii is Khaiii binding for Golang.
+go-khaiii is [Khaiii](https://github.com/kakao/khaiii) binding for Golang.
 
 ## Sample code
 
 - 모델 생성:
     - khaiii.Model.Create(rsc_dir string, opt_str string)
+        - rsc_dir: 리소스 사전의 경로 (default: /usr/local/share/khaiii)
+        - opt_str: 옵션 (JSON 포맷)
 - 형태소 분석:
     - khaiii.Model.Parse(line string)
         - (입력 예시) 나는 회사에 간다
@@ -30,7 +32,7 @@ import (
 func main() {
 	var model khaiii.Model
 
-	err := model.Create("", "")
+	err := model.Create("", "") // "": default
 	if err != nil {
 		fmt.Println("Create Error!")
 		panic(err)
