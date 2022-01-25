@@ -6,7 +6,6 @@ package go_khaiii
 import "C"
 import (
 	"errors"
-	"runtime"
 	"strings"
 	"unsafe"
 )
@@ -36,9 +35,6 @@ func (m *Model) Create(rsc_dir string, opt_str string) error {
 }
 
 func (m *Model) Parse(line string) ([][]string, error) {
-	runtime.LockOSThread()
-	defer runtime.UnlockOSThread()
-
 	var morphs_result [][]string
 
 	c_line := C.CString(line)
