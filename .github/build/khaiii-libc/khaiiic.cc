@@ -16,8 +16,10 @@ khaiii_model_t* Create(char* rsc_dir, char* opt_str)
 char* Parse(int* tagger, char* line)
 {
     char* parsedResult = parse(tagger, line);
+    char blank[] = "";
     if ( parsedResult == NULL ) {
         fprintf(stderr, "[Error] Parsing Sentence Error: %s\n", line);
+        return blank;
     }
     return parsedResult;
 }

@@ -42,6 +42,10 @@ func (m *Model) Parse(line string) ([][]string, error) {
 	parsedString := C.GoString(c_parsedString)
 	C.free(unsafe.Pointer(c_parsedString))
 
+	if parsedString == "" {
+		return nil, nil
+	}
+
 	morph_string_list := strings.Split(parsedString, " + ")
 
 	for _, morph_string := range morph_string_list {
