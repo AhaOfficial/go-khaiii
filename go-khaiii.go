@@ -39,12 +39,13 @@ func (m *Model) Parse(line string) ([][]string, error) {
 
 	c_line := C.CString(line)
 	c_parsedString := C.Parse(m.model.tagger, c_line)
-	parsedString := C.GoString(c_parsedString)
-	C.free(unsafe.Pointer(c_parsedString))
 
-	if line != "" && parsedString == "" {
+	if c_parsedString == nil {
 		return nil, errors.New("[ Fail ] Parse Error!")
 	}
+
+	parsedString := C.GoString(c_parsedString)
+	C.free(unsafe.Pointer(c_parsedString))
 
 	morph_string_list := strings.Split(parsedString, " + ")
 
