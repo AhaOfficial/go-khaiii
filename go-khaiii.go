@@ -5,6 +5,7 @@ package go_khaiii
 */
 import "C"
 import (
+	"errors"
 	"runtime"
 	"strings"
 	"unsafe"
@@ -24,6 +25,9 @@ func (m *Model) Create(rsc_dir string, opt_str string) error {
 	c_opt_str := C.CString(opt_str)
 
 	m.model = C.Create(c_rsc_dir, c_opt_str)
+	if m.model == nil {
+		return errors.New("[ Fail ] Create Model Error!")
+	}
 
 	C.free(unsafe.Pointer(c_rsc_dir))
 	C.free(unsafe.Pointer(c_opt_str))
@@ -42,8 +46,8 @@ func (m *Model) Parse(line string) ([][]string, error) {
 	parsedString := C.GoString(c_parsedString)
 	C.free(unsafe.Pointer(c_parsedString))
 
-	if parsedString == "" {
-		return nil, nil
+	if line != "" && parsedString == "" {
+		return nil, errors.New("[ Fail ] Parse Error!")
 	}
 
 	morph_string_list := strings.Split(parsedString, " + ")
@@ -60,6 +64,10 @@ func (m *Model) Parse(line string) ([][]string, error) {
 }
 
 func (m *Model) Destroy() error {
-	C.Destroy(m.model)
-	return nil
+	is_destroyed := int(C.Destroy(m.model))
+	if is_destroyed == 0 {
+		return errors.New("[ Fail ] Destroy Model Error!")
+	} else {
+		return nil
+	}
 }
