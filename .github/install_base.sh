@@ -33,6 +33,8 @@ if [ -e /etc/os-release ]; then
     else
         cmake ..
     fi
+elif [ -e "/sbin/apk" ]; then   #Alpine in Docker image
+    cmake -E env CXXFLAGS="-w" cmake ..
 else
     cmake ..
 fi
