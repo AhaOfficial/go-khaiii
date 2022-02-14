@@ -27,7 +27,12 @@ ls -al
 echo "Build and Install Original Khaiii..."
 mkdir build && cd build
 
-cmake -E env CXXFLAGS="-w" cmake ..
+OS=$(uname)
+if [[ ${OS} == "Darwin" ]]; then
+    cmake ..
+else
+    cmake -E env CXXFLAGS="-w" cmake ..
+fi
 
 make all
 make resource
