@@ -2,7 +2,7 @@
 set -v
 
 # Set qmake
-qmake
+qmake --help
 if [ $? -eq 0 ]; then
     QMAKE=qmake
 else
