@@ -16,6 +16,9 @@ all:
 	@$(SH) $(INSTALL_KHAIII_LIBC)
 
 install:
+	@mkdir -p $(USR_LIB_PATH)
+	@mkdir -p $(USR_INCLUDE_PATH)
+	@mkdir -p $(USR_SHARE_PATH)
 	@cp -pf $(LIB_KHAIII).* $(USR_LIB_PATH)
 	@cp -pf $(LIB_KHAIII_C).* $(USR_LIB_PATH)
 	@cp -pf $(LIB_KHAIII_C_HEADER) $(USR_INCLUDE_PATH)

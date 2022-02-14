@@ -1,6 +1,14 @@
 #/bin/bash
 set -v
 
+# Set qmake
+qmake
+if [ $? -eq 0 ]; then
+    QMAKE=qmake
+else
+    QMAKE=qmake-qt5
+fi
+
 # Set base path
 cd `dirname ${BASH_SOURCE}`
 BASE=$(pwd) # .github
@@ -11,7 +19,7 @@ echo "[KHAIII_LIBC_DIR] ${KHAIII_LIBC_DIR}"
 
 # Build and Install Khaiii Library for C
 cd ${KHAIII_LIBC_DIR}
-qmake khaiii-libc.pro
+${QMAKE} khaiii-libc.pro
 make
 cp -pf khaiiic.h ${BASE}
 cp -pf libkhaiiic.* ${BASE}

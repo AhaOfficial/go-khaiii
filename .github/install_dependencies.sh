@@ -12,6 +12,8 @@ elif [[ ${OS} == "Linux" ]]; then
         sudo apt-get update
         sudo apt-get -y install build-essential
         sudo apt-get -y install git libssl-dev cmake qt5-default python3 language-pack-ko golang-go
+    elif [ -e "/sbin/apk" ]; then #Alpine in Docker image
+        apk add git cmake qt5-qtbase-dev go
     else
         sudo yum update
         sudo yum install git cmake qt golang
