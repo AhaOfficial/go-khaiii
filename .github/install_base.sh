@@ -27,17 +27,7 @@ ls -al
 echo "Build and Install Original Khaiii..."
 mkdir build && cd build
 
-if [ -e /etc/os-release ]; then
-    if [ $(cat /etc/os-release | grep UBUNTU_CODENAME | awk -F'=' '{print $2}') = "focal" ]; then
-        cmake -E env CXXFLAGS="-w" cmake ..     # Ubuntu 20.04
-    else
-        cmake ..
-    fi
-elif [ -e "/sbin/apk" ]; then   #Alpine in Docker image
-    cmake -E env CXXFLAGS="-w" cmake ..
-else
-    cmake ..
-fi
+cmake -E env CXXFLAGS="-w" cmake ..
 
 make all
 make resource
