@@ -91,6 +91,8 @@ $ go get github.com/AhaOfficial/go-khaiii
 $ yum install -y git qt-devel golang gcc-c++ wget tar make python3
 $ wget https://github.com/Kitware/CMake/releases/download/v3.23.0/cmake-3.23.0-linux-$(echo `arch`).sh
 $ bash ./cmake-3.23.0-linux-$(echo `arch`).sh --skip-license	# MUST NOT LOCATE "/"
+$ cp -pf ./bin/* /usr/bin
+$ cp -pfr ./share/* /usr/share
 
 # Install for go-khaiii libraries
 $ git clone https://github.com/AhaOfficial/go-khaiii.git
