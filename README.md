@@ -84,3 +84,23 @@ $ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
 $ export CGO_LDFLAGS="-L/usr/local/lib -lkhaiiic"
 $ go get github.com/AhaOfficial/go-khaiii
 ```
+
+### Amazon Linux
+
+```bash
+$ yum install -y git qt-devel golang gcc-c++ wget tar make python3
+$ wget https://github.com/Kitware/CMake/releases/download/v3.23.0/cmake-3.23.0-linux-$(echo `arch`).sh
+$ bash ./cmake-3.23.0-linux-$(echo `arch`).sh --skip-license
+$ ln -s /usr/bin/sh /bin/sh
+
+# Install for go-khaiii libraries
+$ git clone https://github.com/AhaOfficial/go-khaiii.git
+$ cd go-khaiii
+$ make
+$ make install
+
+# Export variables
+$ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+$ export CGO_LDFLAGS="-L/usr/local/lib -lkhaiiic"
+$ go get github.com/AhaOfficial/go-khaiii
+```
