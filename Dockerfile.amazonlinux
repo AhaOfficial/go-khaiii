@@ -1,0 +1,31 @@
+FROM public.ecr.aws/amazonlinux/amazonlinux:latest
+
+# Install build-base
+RUN yum install -y git qt-devel golang gcc-c++ wget tar make python3
+RUN mkdir -p /download
+WORKDIR /download
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.23.0/cmake-3.23.0-linux-$(echo `arch`).sh
+RUN bash ./cmake-3.23.0-linux-$(echo `arch`).sh --skip-license
+RUN cp -pf ./bin/* /usr/bin
+RUN cp -pfr ./share/* /usr/share
+
+# Install go-khaiii
+RUN mkdir -p /root/go/src
+WORKDIR /root/go/src
+RUN git clone https://github.com/AhaOfficial/go-khaiii.git
+
+WORKDIR /root/go/src/go-khaiii
+RUN make
+RUN make install
+
+# Export variables
+ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+ENV CGO_LDFLAGS="-L/usr/local/lib -lkhaiiic"
+
+# Run go
+RUN go get github.com/AhaOfficial/go-khaiii
+RUN go mod init
+RUN go mod tidy
+RUN go test
+
+WORKDIR /root
