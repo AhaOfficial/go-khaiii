@@ -6,7 +6,12 @@ qmake --help
 if [ $? -eq 0 ]; then
     QMAKE=qmake
 else
-    QMAKE=qmake-qt5
+    qmake-qt5 --help
+    if [ $? -eq 0 ]; then
+        QMAKE=qmake-qt5
+    else
+        QMAKE=qmake-qt4
+    fi
 fi
 
 # Set base path
