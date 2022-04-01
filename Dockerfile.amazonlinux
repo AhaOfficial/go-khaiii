@@ -1,13 +1,8 @@
 FROM public.ecr.aws/amazonlinux/amazonlinux:latest
 
 # Install build-base
-RUN yum install -y git qt-devel golang gcc-c++ wget tar make python3
-RUN mkdir -p /download
-WORKDIR /download
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.23.0/cmake-3.23.0-linux-$(echo `arch`).sh
-RUN bash ./cmake-3.23.0-linux-$(echo `arch`).sh --skip-license
-RUN cp -pf ./bin/* /usr/bin
-RUN cp -pfr ./share/* /usr/share
+RUN yum install -y git qt-devel golang gcc-c++ wget tar make python3 cmake3
+RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake
 
 # Install go-khaiii
 RUN mkdir -p /root/go/src
