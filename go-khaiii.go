@@ -1,70 +1,79 @@
 package go_khaiii
 
-/*
-#include <khaiiic.h>
-*/
+// #cgo LDFLAGS: -lkhaiii
+// #include <khaiii/khaiii_api.h>
 import "C"
 import (
 	"errors"
-	"strings"
-	"unsafe"
 )
 
 type Model struct {
-	model *C.khaiii_model_t
+	handle C.int
+	words  *C.khaiii_word_t
 }
 
-type Morph struct {
-	lex string
-	tag string
+type Word struct {
+	sentence string
+	word     *C.khaiii_word_t
 }
 
 func (m *Model) Create(rsc_dir string, opt_str string) error {
-	c_rsc_dir := C.CString(rsc_dir)
-	c_opt_str := C.CString(opt_str)
-
-	m.model = C.Create(c_rsc_dir, c_opt_str)
-	if m.model == nil {
-		return errors.New("[ Fail ] Create Model Error!")
+	handle := C.khaiii_open(C.CString(rsc_dir), C.CString(opt_str))
+	if handle < 0 {
+		return errors.New("[Fail] Create Model Error")
 	}
 
-	C.free(unsafe.Pointer(c_rsc_dir))
-	C.free(unsafe.Pointer(c_opt_str))
+	m.handle = handle
 
 	return nil
 }
 
-func (m *Model) Parse(line string) ([][]string, error) {
-	var morphs_result [][]string
-
-	c_line := C.CString(line)
-	c_parsedString := C.Parse(m.model.tagger, c_line)
-
-	if c_parsedString == nil {
-		return nil, errors.New("[ Fail ] Parse Error!")
+func (m *Model) Destroy() {
+	if m.words != nil {
+		m.freeResults()
 	}
-
-	parsedString := C.GoString(c_parsedString)
-	C.free(unsafe.Pointer(c_parsedString))
-
-	morph_string_list := strings.Split(parsedString, " + ")
-
-	for _, morph_string := range morph_string_list {
-		morph_split := strings.Split(morph_string, "/")
-		lex := strings.Join(morph_split[:len(morph_split)-1], "/")
-		tag := morph_split[len(morph_split)-1]
-
-		morphs_result = append(morphs_result, []string{lex, tag})
-	}
-
-	return morphs_result, nil
+	C.khaiii_close(m.handle)
 }
 
-func (m *Model) Destroy() error {
-	is_destroyed := int(C.Destroy(m.model))
-	if is_destroyed == 0 {
-		return errors.New("[ Fail ] Destroy Model Error!")
-	} else {
-		return nil
+func (m *Model) Parse(sentence string) ([][]string, error) {
+	var parsedSentence [][]string
+	wordResults, _ := m.analyze(sentence)
+
+	for _, w := range wordResults {
+		morphs := w.word.morphs
+		for morphs != nil {
+			lex := C.GoString(morphs.lex)
+			tag := C.GoString(morphs.tag)
+			mPair := []string{lex, tag}
+
+			parsedSentence = append(parsedSentence, mPair)
+
+			morphs = morphs.next
+		}
 	}
+	return parsedSentence, nil
+}
+
+func (m *Model) freeResults() {
+	C.khaiii_free_results(m.handle, m.words)
+	m.words = nil
+}
+
+func (m *Model) analyze(sentence string) ([]Word, error) {
+	if m.words != nil {
+		m.freeResults()
+	}
+	var wordResults []Word
+
+	c_sentence := C.CString(sentence)
+	wordPoint := C.khaiii_analyze(m.handle, c_sentence, C.CString(""))
+	m.words = wordPoint
+
+	for wordPoint != nil {
+		w := Word{sentence: sentence, word: wordPoint}
+		wordResults = append(wordResults, w)
+		wordPoint = wordPoint.next
+	}
+
+	return wordResults, nil
 }

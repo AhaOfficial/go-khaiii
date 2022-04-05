@@ -12,11 +12,7 @@ func TestCreate(t *testing.T) {
 		t.Error("Wrong Create")
 		panic(err)
 	} else {
-		err = model.Destroy()
-		if err != nil {
-			t.Error("Destroy Error!")
-			panic(err)
-		}
+		model.Destroy()
 	}
 }
 
@@ -33,11 +29,7 @@ func TestParse(t *testing.T) {
 		panic(err)
 	} else {
 		fmt.Println(result)
-		err = model.Destroy()
-		if err != nil {
-			t.Error("Destroy Error!")
-			panic(err)
-		}
+		model.Destroy()
 	}
 }
 
@@ -48,9 +40,5 @@ func TestDestroy(t *testing.T) {
 		t.Error("Create Error!")
 		return
 	}
-	err = model.Destroy()
-	if err != nil {
-		t.Error("Destroy Error!")
-		return
-	}
+	model.Destroy()
 }
