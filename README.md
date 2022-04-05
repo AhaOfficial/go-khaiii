@@ -54,8 +54,7 @@ func main() {
 
 Before using go-khaiii, need to install [Khaiii](https://github.com/kakao/khaiii).
 
-Here is how to install go-khaiii with [Khaiii](https://github.com/kakao/khaiii) depending on OS.
-(MacOS, Ubuntu Focal Fossa, and Amazon Linux)
+Here is how to install go-khaiii with [Khaiii](https://github.com/kakao/khaiii) depending on OS (MacOS, Ubuntu Focal Fossa, and Amazon Linux).
 
 ### MacOS
 
