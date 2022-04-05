@@ -6,18 +6,18 @@ go-khaiii is [Khaiii](https://github.com/kakao/khaiii) binding for Golang.
 
 ## Sample code
 
-- 모델 생성:
+- Create Model:
     - khaiii.Model.Create(rsc_dir string, opt_str string)
-        - rsc_dir: 리소스 사전의 경로 (default: /usr/local/share/khaiii)
-        - opt_str: 옵션 (JSON 포맷)
-- 형태소 분석:
+        - rsc_dir: a directory of dictionary resources (default: /usr/local/share/khaiii)
+        - opt_str: options (JSON format)
+- Morphological Analysis:
     - khaiii.Model.Parse(line string)
-        - (입력 예시) 나는 회사에 간다
-        - (출력 예시)
+        - (input e.g.) 나는 회사에 간다
+        - (output e.g.)
         [ ["나", "NP"], ["는", "JX"],
            ["회사", "NNG"], ["에", "JKB"], 
            ["가", "VV"], ["ㄴ다", "EC"] ]
-- 모델 소멸:
+- Destroy Model:
     - khaiii.Model.Destroy()
 
 ```go
@@ -51,6 +51,11 @@ func main() {
 ```
 
 # Install
+
+Before using go-khaiii, need to install [Khaiii](https://github.com/kakao/khaiii).
+
+Here is how to install go-khaiii with [Khaiii](https://github.com/kakao/khaiii) depending on OS.
+(MacOS, Ubuntu Focal Fossa, and Amazon Linux)
 
 ### MacOS
 
