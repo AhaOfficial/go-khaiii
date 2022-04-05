@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
     
       - name: Install Khaiii
-        run: bash install_khaiii.sh
+        run: sudo bash install_khaiii.sh
 
       - name: Show go env
         run: go env
@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v2
     
       - name: Install Khaiii
-        run: bash install_khaiii.sh
+        run: sudo bash install_khaiii.sh
 
       - name: Show go env
         run: go env

@@ -49,3 +49,56 @@ func main() {
 	fmt.Println(parsedSentence)
 }
 ```
+
+# Install
+
+### MacOS
+
+```bash
+$ brew install git cmake go
+
+# Download go-khaiii
+$ git clone https://github.com/AhaOfficial/go-khaiii.git
+
+# Install khaiii
+$ cd go-khaiii
+$ sudo bash install_khaiii.sh
+
+# Export variables
+$ go get github.com/AhaOfficial/go-khaiii
+```
+
+### Ubuntu 20.04
+
+```bash
+$ sudo apt-get install -y git cmake golang-go language-pack-ko
+
+# Download go-khaiii
+$ git clone https://github.com/AhaOfficial/go-khaiii.git
+
+# Install khaiii
+$ cd go-khaiii
+$ sudo bash install_khaiii.sh
+
+# Export variables
+$ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+$ go get github.com/AhaOfficial/go-khaiii
+```
+
+### Amazon Linux
+
+```bash
+$ yum install -y git golang gcc-c++ wget tar make python3 cmake3
+$ ln -sf /usr/bin/cmake3 /usr/bin/cmake
+
+# Download go-khaiii
+$ git clone https://github.com/AhaOfficial/go-khaiii.git
+
+# Install khaiii
+$ cd go-khaiii
+$ bash install_khaiii.sh
+
+# Export variables
+$ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+$ go get github.com/AhaOfficial/go-khaiii
+```
