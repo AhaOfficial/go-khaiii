@@ -1,0 +1,48 @@
+name: test
+
+on:
+  pull_request: {}
+  push:
+    branches:
+      - main
+
+jobs:
+  macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+    
+      - name: Install Khaiii
+        run: bash install_khaiii.sh
+
+      - name: Show go env
+        run: go env
+
+      - name: Test
+        run: |
+          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+          go mod init github.com/AhaOfficial/go-khaiii
+          go mod tidy
+          go test
+
+  linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+    
+      - name: Install Khaiii
+        run: bash install_khaiii.sh
+
+      - name: Show go env
+        run: go env
+
+      - name: Test
+        run: |
+          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/lib"
+          go mod init github.com/AhaOfficial/go-khaiii
+          go mod tidy
+          go test
