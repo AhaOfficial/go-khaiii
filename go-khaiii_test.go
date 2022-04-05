@@ -5,17 +5,6 @@ import (
 	"testing"
 )
 
-func TestCreate(t *testing.T) {
-	var model Model
-	err := model.Create("", "")
-	if err != nil {
-		t.Error("Wrong Create")
-		panic(err)
-	} else {
-		model.Destroy()
-	}
-}
-
 func TestParse(t *testing.T) {
 	var model Model
 	err := model.Create("", "")
@@ -27,18 +16,7 @@ func TestParse(t *testing.T) {
 	if err != nil {
 		t.Error("Parse Error!")
 		panic(err)
-	} else {
-		fmt.Println(result)
-		model.Destroy()
 	}
-}
-
-func TestDestroy(t *testing.T) {
-	var model Model
-	err := model.Create("", "")
-	if err != nil {
-		t.Error("Create Error!")
-		return
-	}
+	fmt.Println(result)
 	model.Destroy()
 }
