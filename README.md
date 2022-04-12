@@ -2,7 +2,7 @@
 
 ## What is go-khaiii?
 
-go-khaiii is [Khaiii](https://github.com/kakao/khaiii) binding for Golang.
+[go-khaiii](https://github.com/AhaOfficial/go-khaiii) is [khaiii](https://github.com/kakao/khaiii) (Korean Morphological Analyzer) binding for Golang.
 
 ## Sample code
 
@@ -35,7 +35,6 @@ package main
 
 import (
 	"fmt"
-
 	khaiii "github.com/AhaOfficial/go-khaiii"
 )
 
@@ -96,9 +95,11 @@ func main() {
 
 # Install
 
-Before using go-khaiii, need to install [Khaiii](https://github.com/kakao/khaiii).
+Before using [go-khaiii](https://github.com/AhaOfficial/go-khaiii), need to install [khaiii](https://github.com/kakao/khaiii).
 
-Here is how to install go-khaiii with [Khaiii](https://github.com/kakao/khaiii) depending on OS (MacOS, Ubuntu Focal Fossa, and Amazon Linux).
+Here is how to install [go-khaiii](https://github.com/AhaOfficial/go-khaiii) with [khaiii](https://github.com/kakao/khaiii) depending on OS (MacOS, Ubuntu 20.04, and Amazon Linux).
+
+There are also dockerfiles with [go-khaiii](https://github.com/AhaOfficial/go-khaiii) installed ([Ubuntu 20.04](https://github.com/AhaOfficial/go-khaiii/blob/main/docker/ubuntu/Dockerfile) and [Amazon Linux](https://github.com/AhaOfficial/go-khaiii/blob/main/docker/amazonlinux/Dockerfile)).
 
 ### MacOS
 
@@ -116,7 +117,7 @@ $ sudo bash install_khaiii.sh
 $ go get github.com/AhaOfficial/go-khaiii
 ```
 
-### Ubuntu 20.04
+### Ubuntu 20.04 (Focal Fossa)
 
 ```bash
 $ sudo apt-get install -y git cmake golang-go language-pack-ko
