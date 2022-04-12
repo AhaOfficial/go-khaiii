@@ -20,9 +20,9 @@ func TestAnalyze(t *testing.T) {
 	}
 	fmt.Println(result)
 	for _, r := range result {
-		fmt.Printf("%s\t", r.word)
-		for _, m := range r.morphs {
-			fmt.Printf("(%s/%s) ", m.lex, m.tag)
+		fmt.Printf("%s\t", r.Word)
+		for _, m := range r.Morphs {
+			fmt.Printf("(%s/%s) ", m.Lex, m.Tag)
 		}
 		fmt.Println()
 	}
@@ -61,7 +61,7 @@ func TestParse(t *testing.T) {
 	}
 	fmt.Println(result)
 	for _, m := range result {
-		fmt.Printf("(%s/%s) ", m.lex, m.tag)
+		fmt.Printf("(%s/%s) ", m.Lex, m.Tag)
 	}
 	fmt.Println()
 	model.Destroy()

@@ -18,13 +18,13 @@ type WordC struct {
 }
 
 type Word struct {
-	word   string
-	morphs []Morph
+	Word   string
+	Morphs []Morph
 }
 
 type Morph struct {
-	lex string
-	tag string
+	Lex string
+	Tag string
 }
 
 func (m *Model) Create(rsc_dir string, opt_str string) error {
@@ -51,16 +51,16 @@ func (m *Model) Analyze(sentence string) ([]Word, error) {
 
 	for _, w := range wordResults {
 		word := Word{
-			word:   w.sentence[w.word.begin : w.word.begin+w.word.length],
-			morphs: []Morph{},
+			Word:   w.sentence[w.word.begin : w.word.begin+w.word.length],
+			Morphs: []Morph{},
 		}
 		morphsPtr := w.word.morphs
 		for morphsPtr != nil {
-			word.morphs = append(
-				word.morphs,
+			word.Morphs = append(
+				word.Morphs,
 				Morph{
-					lex: C.GoString(morphsPtr.lex),
-					tag: C.GoString(morphsPtr.tag),
+					Lex: C.GoString(morphsPtr.lex),
+					Tag: C.GoString(morphsPtr.tag),
 				},
 			)
 			morphsPtr = morphsPtr.next
@@ -94,8 +94,8 @@ func (m *Model) Parse(sentence string) ([]Morph, error) {
 		morphs := w.word.morphs
 		for morphs != nil {
 			parsedMorphs = append(parsedMorphs, Morph{
-				lex: C.GoString(morphs.lex),
-				tag: C.GoString(morphs.tag),
+				Lex: C.GoString(morphs.lex),
+				Tag: C.GoString(morphs.tag),
 			})
 			morphs = morphs.next
 		}

@@ -66,7 +66,7 @@ func main() {
 		panic(err)
 	}
 	for _, m := range resultParse {
-		fmt.Printf("(%s/%s) ", m.lex, m.tag)
+		fmt.Printf("(%s/%s) ", m.Lex, m.Tag)
 	}
 	fmt.Println()
 
@@ -85,9 +85,9 @@ func main() {
 		panic(err)
 	}
 	for _, r := range resultAnalyze {
-		fmt.Printf("%s\t", r.word)
-		for _, m := range r.morphs {
-			fmt.Printf("(%s/%s) ", m.lex, m.tag)
+		fmt.Printf("%s\t", r.Word)
+		for _, m := range r.Morphs {
+			fmt.Printf("(%s/%s) ", m.Lex, m.Tag)
 		}
 		fmt.Println()
 	}
