@@ -11,12 +11,22 @@ go-khaiii is [Khaiii](https://github.com/kakao/khaiii) binding for Golang.
         - rsc_dir: a directory of dictionary resources (default: /usr/local/share/khaiii)
         - opt_str: options (JSON format)
 - Morphological Analysis:
-    - khaiii.Model.Parse(line string)
+    - khaiii.Model.ParseV1(line string)
         - (input e.g.) 나는 회사에 간다
         - (output e.g.)
-        [ ["나", "NP"], ["는", "JX"],
-           ["회사", "NNG"], ["에", "JKB"], 
-           ["가", "VV"], ["ㄴ다", "EC"] ]
+        [[나 NP] [는 JX] [회사 NNG] [에 JKB] [가 VV] [ㄴ다 EC]]
+	- khaiii.Model.Parse(line string)
+        - (input e.g.) 나는 회사에 간다
+        - (output e.g.)
+        [{나 NP} {는 JX} {회사 NNG} {에 JKB} {가 VV} {ㄴ다 EC}]
+	- khaiii.Model.Nouns(line string)
+        - (input e.g.) 나는 회사에 간다
+        - (output e.g.)
+        [나 회사]
+	- khaiii.Model.Analyze(line string)
+        - (input e.g.) 나는 회사에 간다
+        - (output e.g.)
+        [{나는 [{나 NP} {는 JX}]} {회사에 [{회사 NNG} {에 JKB}]} {간다 [{가 VV} {ㄴ다 EC}]}]
 - Destroy Model:
     - khaiii.Model.Destroy()
 
@@ -40,13 +50,47 @@ func main() {
 	defer model.Destroy()
 
 	var sentence string = "나는 회사에 간다"
-	parsedSentence, err := model.Parse(sentence)
+	
+	// ParseV1
+	resultParseV1, err := model.ParseV1(sentence)
 	if err != nil {
 		fmt.Println("Parsing Error!")
 		panic(err)
 	}
-	fmt.Println(sentence)
-	fmt.Println(parsedSentence)
+	fmt.Println(resultParseV1)
+
+	// Parse
+	resultParse, err := model.Parse(sentence)
+	if err != nil {
+		fmt.Println("Parsing Error!")
+		panic(err)
+	}
+	for _, m := range resultParse {
+		fmt.Printf("(%s/%s) ", m.lex, m.tag)
+	}
+	fmt.Println()
+
+	// Nouns
+	resultNouns, err := model.Nouns(sentence)
+	if err != nil {
+		fmt.Println("Parsing Error!")
+		panic(err)
+	}
+	fmt.Println(resultNouns)
+
+	// Analyze
+	resultAnalyze, err := model.Analyze(sentence)
+	if err != nil {
+		fmt.Println("Parsing Error!")
+		panic(err)
+	}
+	for _, r := range resultAnalyze {
+		fmt.Printf("%s\t", r.word)
+		for _, m := range r.morphs {
+			fmt.Printf("(%s/%s) ", m.lex, m.tag)
+		}
+		fmt.Println()
+	}
 }
 ```
 

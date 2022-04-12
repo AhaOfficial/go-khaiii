@@ -12,9 +12,19 @@ type Model struct {
 	words  *C.khaiii_word_t
 }
 
-type Word struct {
+type WordC struct {
 	sentence string
 	word     *C.khaiii_word_t
+}
+
+type Word struct {
+	word   string
+	morphs []Morph
+}
+
+type Morph struct {
+	lex string
+	tag string
 }
 
 func (m *Model) Create(rsc_dir string, opt_str string) error {
@@ -35,9 +45,67 @@ func (m *Model) Destroy() {
 	C.khaiii_close(m.handle)
 }
 
-func (m *Model) Parse(sentence string) ([][]string, error) {
+func (m *Model) Analyze(sentence string) ([]Word, error) {
+	var parsedWords []Word
+	wordResults, _ := m.analyzeRaw(sentence)
+
+	for _, w := range wordResults {
+		word := Word{
+			word:   w.sentence[w.word.begin : w.word.begin+w.word.length],
+			morphs: []Morph{},
+		}
+		morphsPtr := w.word.morphs
+		for morphsPtr != nil {
+			word.morphs = append(
+				word.morphs,
+				Morph{
+					lex: C.GoString(morphsPtr.lex),
+					tag: C.GoString(morphsPtr.tag),
+				},
+			)
+			morphsPtr = morphsPtr.next
+		}
+		parsedWords = append(parsedWords, word)
+	}
+	return parsedWords, nil
+}
+
+func (m *Model) Nouns(sentence string) ([]string, error) {
+	var parsedNouns []string
+	wordResults, _ := m.analyzeRaw(sentence)
+
+	for _, w := range wordResults {
+		morphs := w.word.morphs
+		for morphs != nil {
+			if C.GoString(morphs.tag)[0] == 'N' {
+				parsedNouns = append(parsedNouns, C.GoString(morphs.lex))
+			}
+			morphs = morphs.next
+		}
+	}
+	return parsedNouns, nil
+}
+
+func (m *Model) Parse(sentence string) ([]Morph, error) {
+	var parsedMorphs []Morph
+	wordResults, _ := m.analyzeRaw(sentence)
+
+	for _, w := range wordResults {
+		morphs := w.word.morphs
+		for morphs != nil {
+			parsedMorphs = append(parsedMorphs, Morph{
+				lex: C.GoString(morphs.lex),
+				tag: C.GoString(morphs.tag),
+			})
+			morphs = morphs.next
+		}
+	}
+	return parsedMorphs, nil
+}
+
+func (m *Model) ParseV1(sentence string) ([][]string, error) {
 	var parsedSentence [][]string
-	wordResults, _ := m.analyze(sentence)
+	wordResults, _ := m.analyzeRaw(sentence)
 
 	for _, w := range wordResults {
 		morphs := w.word.morphs
@@ -59,18 +127,18 @@ func (m *Model) freeResults() {
 	m.words = nil
 }
 
-func (m *Model) analyze(sentence string) ([]Word, error) {
+func (m *Model) analyzeRaw(sentence string) ([]WordC, error) {
 	if m.words != nil {
 		m.freeResults()
 	}
-	var wordResults []Word
+	var wordResults []WordC
 
 	c_sentence := C.CString(sentence)
 	wordPoint := C.khaiii_analyze(m.handle, c_sentence, C.CString(""))
 	m.words = wordPoint
 
 	for wordPoint != nil {
-		w := Word{sentence: sentence, word: wordPoint}
+		w := WordC{sentence: sentence, word: wordPoint}
 		wordResults = append(wordResults, w)
 		wordPoint = wordPoint.next
 	}
