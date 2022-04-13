@@ -77,8 +77,10 @@ func (m *Model) Nouns(sentence string) ([]string, error) {
 	for _, w := range wordResults {
 		morphs := w.word.morphs
 		for morphs != nil {
-			if C.GoString(morphs.tag)[0] == 'N' {
-				parsedNouns = append(parsedNouns, C.GoString(morphs.lex))
+			lex := C.GoString(morphs.lex)
+			tag := C.GoString(morphs.tag)
+			if tag == "NNG" || tag == "NNP" {
+				parsedNouns = append(parsedNouns, lex)
 			}
 			morphs = morphs.next
 		}
