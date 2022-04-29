@@ -37,7 +37,36 @@ func TestNouns(t *testing.T) {
 		t.Error("Create Error!")
 		panic(err)
 	}
-	result, err := model.Nouns("나는 회사에 간다")
+	result, err := model.Nouns("나는 백신접종을 하였다")
+	if err != nil {
+		t.Error("Parse Error!")
+		panic(err)
+	}
+	fmt.Println(result)
+	result, err = model.Nouns("정보기술회사를 다니는 나는 백신접종 하였다")
+	if err != nil {
+		t.Error("Parse Error!")
+		panic(err)
+	}
+	fmt.Println(result)
+	model.Destroy()
+}
+
+func TestNounsComposed(t *testing.T) {
+	fmt.Printf("\nNounsComposed\n====================\n")
+	var model Model
+	err := model.Create("", "")
+	if err != nil {
+		t.Error("Create Error!")
+		panic(err)
+	}
+	result, err := model.NounsComposed("나는 백신접종을 하였다")
+	if err != nil {
+		t.Error("Parse Error!")
+		panic(err)
+	}
+	fmt.Println(result)
+	result, err = model.NounsComposed("정보기술회사를 다니는 나는 백신접종 하였다")
 	if err != nil {
 		t.Error("Parse Error!")
 		panic(err)

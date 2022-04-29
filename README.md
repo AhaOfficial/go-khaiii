@@ -20,9 +20,13 @@
         - (output e.g.)
         [{나 NP} {는 JX} {회사 NNG} {에 JKB} {가 VV} {ㄴ다 EC}]
 	- khaiii.Model.Nouns(line string)
-        - (input e.g.) 나는 회사에 간다
+        - (input e.g.) 나는 백신접종을 하였다
         - (output e.g.)
-        [나 회사]
+        [백신 접종]
+	- khaiii.Model.NounsComposed(line string)
+        - (input e.g.) 나는 백신접종을 하였다
+        - (output e.g.)
+        [백신접종]
 	- khaiii.Model.Analyze(line string)
         - (input e.g.) 나는 회사에 간다
         - (output e.g.)
@@ -71,6 +75,14 @@ func main() {
 
 	// Nouns
 	resultNouns, err := model.Nouns(sentence)
+	if err != nil {
+		fmt.Println("Parsing Error!")
+		panic(err)
+	}
+	fmt.Println(resultNouns)
+
+	// NounsComposed
+	resultNouns, err := model.NounsComposed(sentence)
 	if err != nil {
 		fmt.Println("Parsing Error!")
 		panic(err)

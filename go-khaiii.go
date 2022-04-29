@@ -5,6 +5,7 @@ package go_khaiii
 import "C"
 import (
 	"errors"
+	"strings"
 )
 
 type Model struct {
@@ -83,6 +84,42 @@ func (m *Model) Nouns(sentence string) ([]string, error) {
 				parsedNouns = append(parsedNouns, lex)
 			}
 			morphs = morphs.next
+		}
+	}
+	return parsedNouns, nil
+}
+
+func (m *Model) NounsComposed(sentence string) ([]string, error) {
+	var parsedNouns []string
+	wordResults, _ := m.analyzeRaw(sentence)
+
+	for _, w := range wordResults {
+		var nounsInWord []string
+		var nounMode bool = false
+
+		morphs := w.word.morphs
+
+		for morphs != nil {
+			lex := C.GoString(morphs.lex)
+			tag := C.GoString(morphs.tag)
+
+			if tag == "NNG" || tag == "NNP" {
+				nounsInWord = append(nounsInWord, lex)
+				if !nounMode {
+					nounMode = true
+				}
+			} else if len(nounsInWord) > 0 {
+				parsedNouns = append(parsedNouns, strings.Join(nounsInWord, ""))
+				nounMode = false
+				nounsInWord = nounsInWord[:0]
+			}
+
+			morphs = morphs.next
+		}
+
+		if len(nounsInWord) > 0 {
+			parsedNouns = append(parsedNouns, strings.Join(nounsInWord, ""))
+			nounsInWord = nounsInWord[:0]
 		}
 	}
 	return parsedNouns, nil
